@@ -12,7 +12,7 @@ const Container = styled.div`
 `;
 
 const FormField = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 const Label = styled.label`
@@ -22,22 +22,20 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  padding: 8px;
-  font-size: 14px;
+  padding: 10px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 200px;
+  width: 100%;
 `;
 
 const Select = styled.select`
-  padding: 8px;
-  font-size: 14px;
+  padding: 10px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 200px;
+  width: 100%;
 `;
-
-
 
 const Grid: React.FC<HooverProps> = ({ initialPosition }) => {
   const [instructions, setInstructions] = useState<Instruction[]>([]);
@@ -80,7 +78,6 @@ const Grid: React.FC<HooverProps> = ({ initialPosition }) => {
 
   return (
     <Container>
-
       <FormField>
         <Label>X:</Label>
         <Input type="number" value={hooverX} onChange={handleHooverXChange} />

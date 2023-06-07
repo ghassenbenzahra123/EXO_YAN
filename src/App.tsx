@@ -3,13 +3,24 @@ import styled from 'styled-components';
 import Grid from './components/Grid';
 import { Position, Orientation } from './types/types';
 
+const FullscreenContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f8f8f8;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-color: #f8f8f8; 
+  background-color: #f8f8f8;
+  flex-grow: 1;
 `;
 
 const Title = styled.h1`
@@ -40,11 +51,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Title>iHoover</Title>
-      <Grid gridWidth={gridWidth} gridHeight={gridHeight} initialPosition={initialPosition} />
-      <Button onClick={handleOpenPopup}>Let's Talk! 😃</Button>
-    </Container>
+    <FullscreenContainer>
+      <Container>
+        <Title>iHoover</Title>
+        <Grid gridWidth={gridWidth} gridHeight={gridHeight} initialPosition={initialPosition} />
+        <Button onClick={handleOpenPopup}>Let's Talk! 😃</Button>
+      </Container>
+    </FullscreenContainer>
   );
 };
 
