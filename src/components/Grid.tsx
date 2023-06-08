@@ -43,6 +43,9 @@ const Grid: React.FC<HooverProps> = ({ initialPosition }) => {
   const [hooverX, setHooverX] = useState(initialPosition.x);
   const [hooverY, setHooverY] = useState(initialPosition.y);
   const [hooverOrientation, setHooverOrientation] = useState(initialPosition.orientation);
+  const [gridSizeX, setGridSizeX] = useState(5); 
+  const [gridSizeY, setGridSizeY] = useState(5); 
+
 
   useEffect(() => {
     const newPosition: Position = {
@@ -53,8 +56,19 @@ const Grid: React.FC<HooverProps> = ({ initialPosition }) => {
 
     const hoover = new Hoover(newPosition);
     const finalPosition = hoover.executeInstructions(instructions);
-    setHooverPosition({ ...finalPosition });
-  }, [hooverX, hooverY, hooverOrientation, instructions]);
+
+    // Check if the final position is within the grid boundaries
+    if (
+      finalPosition.x >= 0 &&
+      finalPosition.x <= gridSizeX &&
+      finalPosition.y >= 0 &&
+      finalPosition.y <= gridSizeY
+    ) {
+      setHooverPosition({ ...finalPosition });
+    } else {
+      alert('Hoover position is outside the grid boundaries!');
+    }
+  }, [hooverX, hooverY, hooverOrientation, instructions, gridSizeX, gridSizeY]);
 
   const handleInstructionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputInstructions = event.target.value.split('') as Instruction[];
@@ -63,12 +77,20 @@ const Grid: React.FC<HooverProps> = ({ initialPosition }) => {
 
   const handleHooverXChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newX = Number(event.target.value);
-    setHooverX(newX);
+    if (newX >= 0 && newX <= gridSizeX) {
+      setHooverX(newX);
+    } else {
+      alert('Initial position is outside the grid boundaries!');
+    }
   };
 
   const handleHooverYChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newY = Number(event.target.value);
-    setHooverY(newY);
+    if (newY >= 0 && newY <= gridSizeY) {
+      setHooverY(newY);
+    } else {
+      alert('Initial position is outside the grid boundaries!');
+    }
   };
 
   const handleHooverOrientationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -76,14 +98,35 @@ const Grid: React.FC<HooverProps> = ({ initialPosition }) => {
     setHooverOrientation(newOrientation);
   };
 
+  const handleGridSizeXChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newXSize = Number(event.target.value);
+    setGridSizeX(newXSize);
+
+  };
+
+  const handleGridSizeYChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newYSize = Number(event.target.value);
+    setGridSizeY(newYSize);
+
+  };
+
   return (
     <Container>
       <FormField>
-        <Label>X:</Label>
+        <Label>Grid Size X:</Label>
+        <Input type="number" value={gridSizeX} onChange={handleGridSizeXChange} />
+      </FormField>
+      <FormField>
+        <Label>Grid Size Y:</Label>
+        <Input type="number" value={gridSizeY} onChange={handleGridSizeYChange} />
+      </FormField>
+      <p><strong>Grid size:</strong> X={gridSizeX}  Y={gridSizeY}</p>
+      <FormField>
+        <Label>Initial Positon X:</Label>
         <Input type="number" value={hooverX} onChange={handleHooverXChange} />
       </FormField>
       <FormField>
-        <Label>Y:</Label>
+        <Label>Initial Position Y:</Label>
         <Input type="number" value={hooverY} onChange={handleHooverYChange} />
       </FormField>
       <FormField>
